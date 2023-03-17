@@ -1,0 +1,76 @@
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+
+// Helper function to read CSV data
+async function fetchCSVData(url) {
+    const response = await fetch(url);
+    const data = await response.text();
+    const rows = data.split('\n').slice(1);
+    const csvData = rows.map(row => {
+        const cols = row.split(',');
+        return {
+            mlsId: cols[0],
+            username: cols[1],
+            password: cols[2]
+        };
+    });
+    return csvData;
+}
+
+// Login functionality
+const loginForm = document.getElementById('login-form');
+if (loginForm) {
+    loginForm.addEventListener('submit', async event => {
+        event.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const users = await fetchCSVData('data/mls_data.csv');
+        const user = users.find(user => user.username === username && user.password === password);
+
+        if (user) {
+            alert('Login successful');
+            window.location.href = 'search.html';
+        } else {
+            alert('Invalid username or password');
+        }
+    });
+}
+
+// Signup functionality
+const signupForm = document.getElementById('signup-form');
+if (signupForm) {
+    signupForm.addEventListener('submit', async event => {
+        event.preventDefault();
+
+        const mlsId = document.getElementById('mls-id').value;
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const users = await fetchCSVData('data/mls_data.csv');
+        const userExists = users.find(user => user.mlsId === mlsId || user.username === username);
+
+        if (userExists) {
+            alert('MLS ID or username already exists');
+        } else {
+            alert('Signup successful');
+            window.location.href = 'login.html';
+        }
+    });
+}
+
+// Property search functionality
+const searchForm = document.getElementById('search-form');
+if (searchForm) {
+    searchForm.addEventListener('submit', async event => {
+        event.preventDefault();
+
+        const zipcode = document.getElementById('zipcode').value;
+
+        // Implement property search and scatter plot visualization here
+        // Use the fetched property data and the entered ZIP code to filter and display results
+
+        alert(`Search for properties in ZIP code: ${zipcode}`);
+    });
+}

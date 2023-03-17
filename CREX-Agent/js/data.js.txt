@@ -1,0 +1,25 @@
+// Load and parse CSV data
+async function loadCSV(url) {
+    const response = await fetch(url);
+    const data = await response.text();
+    const rows = data.split("\n").slice(1);
+    return rows.map((row) => {
+        const cols = row.split(",");
+        return {
+            mlsId: cols[0],
+            zipCode: cols[1],
+            saleDate: cols[2],
+            salePrice: parseFloat(cols[3])
+        };
+    });
+}
+
+// Fetch property data
+async function fetchPropertyData() {
+    return await loadCSV("data/property_data.csv");
+}
+
+// Filter property data by ZIP code
+function filterPropertiesByZipCode(properties, zipCode) {
+    return properties.filter((property) => property.zipCode === zipCode);
+}
