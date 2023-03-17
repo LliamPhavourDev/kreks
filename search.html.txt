@@ -1,43 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
-    <title>CREX Agent - Property Search</title>
+    <link rel="stylesheet" href="styles.css">
+    <title>CREX Agent - Search</title>
 </head>
-
 <body>
     <header>
-        <h1>CREX Agent</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="login.html">Login</a>
-        </nav>
+        <h1>Search Properties</h1>
     </header>
-
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="signup.html">Sign Up</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </nav>
     <main>
-        <h2>Property Search</h2>
-        <form id="search-form">
-            <div>
-                <label for="zipcode">ZIP Code:</label>
-                <input type="text" id="zipcode" required>
-            </div>
-            <div>
+        <section>
+            <form>
+                <label for="zip">ZIP Code:</label>
+                <input type="text" id="zip" name="zip" required>
                 <button type="submit">Search</button>
+            </form>
+        </section>
+        <section>
+            <h2>Search Results</h2>
+            <div id="results">
+                <!-- Search results will be displayed here. -->
             </div>
-        </form>
-
-        <div id="scatter-plot"></div>
+        </section>
     </main>
-
     <footer>
         <p>&copy; 2023 CREX Agent. All rights reserved.</p>
     </footer>
-
-    <script src="js/main.js"></script>
+    <script src="main.js"></script>
 </body>
-
 </html>
