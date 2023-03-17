@@ -8,42 +8,39 @@
     <title>CREX Agent</title>
 </head>
 <body>
-    <header>
-        <h1>Welcome to CREX Agent</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/signup">Sign Up</a></li>
-            <li><a href="/login">Login</a></li>
-        </ul>
-    </nav>
-    <main>
-        <section>
-            <h2>About CREX Agent</h2>
-            <p>CREX Agent is a real estate valuation platform that enables users to analyze property values based on recent sales data. Sign up or log in to search for properties by ZIP code and interact with our interactive scatter plot visualization.</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2023 CREX Agent. All rights reserved.</p>
-    </footer>
+    <div id="app"></div>
     <script>
-        (function () {
-            const routes = {
-                "": "index.html",
-                "signup": "signup.html",
-                "login": "login.html",
-                "search": "search.html",
-            };
+        const routes = {
+            "": "app.html",
+            "signup": "signup.html",
+            "login": "login.html",
+            "search": "search.html",
+        };
 
-            const currentPath = window.location.pathname.replace("/", "");
-            const targetRoute = routes[currentPath] || "index.html";
+        function loadPage(path) {
+            const targetRoute = routes[path] || "app.html";
             fetch(targetRoute)
                 .then((response) => response.text())
                 .then((html) => {
-                    document.querySelector("body").innerHTML = html;
+                    document.querySelector("#app").innerHTML = html;
                 });
-        })();
+        }
+
+        window.addEventListener("popstate", () => {
+            const currentPath = window.location.pathname.replace("/", "");
+            loadPage(currentPath);
+        });
+
+        document.addEventListener("click", (event) => {
+            if (event.target.tagName === "A" && event.target.getAttribute("href").startsWith("/")) {
+                event.preventDefault();
+                const path = event.target.getAttribute("href").replace("/", "");
+                window.history.pushState({}, "", event.target.href);
+                loadPage(path);
+            }
+        });
+
+        loadPage(window.location.pathname.replace("/", ""));
     </script>
 </body>
 </html>
